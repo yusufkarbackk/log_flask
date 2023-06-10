@@ -15,6 +15,23 @@ function log_flask() {
   echo "[$timestamp] $message" >> "$LOG_FILE"
 }
 
+function cek_cpu(){
+  threshold=80
+
+# Get the CPU usage percentage using the top command and extract the value
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+
+# Compare the CPU usage to the threshold
+if (( $(echo "$cpu_usage > $threshold" | bc -l) )); then
+  echo "CPU usage is above the threshold of $threshold%"
+else
+  echo "CPU usage is below the threshold of $threshold%"
+fi
+
+log_flask $cpu_usage
+
+}
+
 function cek_localhost() {
   local url=$1
   local method=$2
@@ -52,6 +69,7 @@ fi
 #cek apakah localhost sudah nyala
 cek_localhost "$APP_URL" "GET"
 
+cek_cpu
 
 # Membuat beberapa permintaan HTTP ke aplikasi Flask sebagai contoh
 make_request "$APP_URL" "GET"
