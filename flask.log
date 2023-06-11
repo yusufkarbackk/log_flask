@@ -4,3 +4,13 @@
 [2023-06-11 10:11:17] [GET] http://localhost:5000 200
 [2023-06-11 10:11:18] [GET] http://localhost:5000 hello flask
 [2023-06-11 10:11:19] [GET] http://localhost:5000/hai 404
+[2023-06-11 10:28:45] [GET] http://localhost:5000 200
+[2023-06-11 10:28:47] [GET] http://localhost:5000 hello flask
+[2023-06-11 10:28:48] [GET] http://localhost:5000/hai 404
+[2023-06-11 10:48:15] [GET] http://localhost:5000 200
+[2023-06-11 10:48:17] [GET] http://localhost:5000 hello flask
+[2023-06-11 10:48:18] [GET] http://localhost:5000/hai 404
+[2023-06-11 16:36:46] [GET] http://localhost:5000 000
+{"ok":true,"result":{"message_id":51,"sender_chat":{"id":-1001880819798,"title":"FlaskServerChannel","username":"FlaskServer","type":"channel"},"chat":{"id":-1001880819798,"title":"FlaskServerChannel","username":"FlaskServer","type":"channel"},"date":1686476207,"text":"[2023-06-11 16:36:46] [GET] http://localhost:5000 000"}}[2023-06-11 16:36:51] [GET] http://localhost:5000 000
+{"ok":true,"result":{"message_id":52,"sender_chat":{"id":-1001880819798,"title":"FlaskServerChannel","username":"FlaskServer","type":"channel"},"chat":{"id":-1001880819798,"title":"FlaskServerChannel","username":"FlaskServer","type":"channel"},"date":1686476211,"text":"[2023-06-11 16:36:51] [GET] http://localhost:5000 000"}}[2023-06-11 16:36:52] [GET] http://localhost:5000 
+{"ok":true,"result":{"message_id":53,"sender_chat":{"id":-1001880819798,"title":"FlaskServerChannel","username":"FlaskServer","type":"channel"},"chat":{"id":-1001880819798,"title":"FlaskServerChannel","username":"FlaskServer","type":"channel"},"date":1686476213,"text":"[2023-06-11 16:36:52] [GET] http://localhost:5000"}}

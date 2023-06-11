@@ -5,67 +5,72 @@ APP_URL="http://localhost:5000"
 
 APP_URL_404="http://localhost:5000/hai"
 
+telegram_url = "https://api.telegram.org/bot6282401844:AAGiWIxqy4-3ixDWCD1CVS0cubOCB7fYPuE/sendMessage?parse_mode=HTML"
+
+chat_id = "-1001880819798"
+
+
 # Nama file log
 LOG_FILE="flask.log"
 
 # Fungsi untuk mencatat log
 function log_flask() {
-  local timestamp=$(date +"%Y-%m-%d %T")
-  local message=$1
-  echo "[$timestamp] $message" >> "$LOG_FILE"
-
-  curl -s -o /dev/null --data chat_id="-1001880819798" --data-urlencode "text=[$timestamp] $message" >> "$LOG_FILE" "https://api.telegram.org/bot6282401844:AAGiWIxqy4-3ixDWCD1CVS0cubOCB7fYPuE/sendMessage?parse_mode=HTML"
+    local timestamp=$(date +"%Y-%m-%d %T")
+    local message=$1
+    echo "[$timestamp] $message" >> "$LOG_FILE"
+    
+    curl -s -o /dev/null --data chat_id=$chat_id --data-urlencode "text=[$timestamp] $message" "$telegram_url"
 }
 
-# function cek_cpu(){
-#   threshold=80
-
-# # Get the CPU usage percentage using the top command and extract the value
-# cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
-
-# # Compare the CPU usage to the threshold
-# if (( $(echo "$cpu_usage > $threshold" | bc -l) )); then
-#   echo "CPU usage is above the threshold of $threshold%"
-# else
-#   echo "CPU usage is below the threshold of $threshold%"
-# fi
-
-# log_flask $cpu_usage
-
-# }
+function cek_cpu(){
+    # Penggunaan CPU
+    cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+    
+    # Menampilkan pada terminal penggunaan CPU
+    echo "Pengunaan anda $cpu_usage%"
+    # Memasukan keluaran pengunaan CPU lalu memasukannya kedalam file Log
+    echo "Waktu: $timestamp,Pengunaan CPU: $cpu_usage%" >> "$log_file"
+    
+    # Pengkondisian apabila pengunaan CPU > 25% maka akan memberikan notifikasi
+    if [ "$cpu_usage" -ge "25" ];then
+        # Mengirim notifikasi ke Telegram
+        curl -s -X POST "$URL" -d "chat_id=$ID_CHAT" -d "text=[$timestamp] Penggunaan CPU Anda Sudah Mencapai $cpu_usage% !"
+    fi
+}
 
 function cek_localhost() {
-  local url=$1
-  local method=$2
-  local response=$(curl -s -o /dev/null -w "%{http_code}" "$APP_URL")
-
-  if [[ $response -eq 200 ]]; then
+    local url=$1
+    local method=$2
+    local response=$(curl -s -o /dev/null -w "%{http_code}" "$APP_URL")
+    
+    if [[ $response -eq 200 ]]; then
         echo "Aplikasi Flask sudah menyala di $APP_URL"
-  else
+    else
+        echo "Flask down"
         echo "starting flask..."
         python3 main.py
         echo "flask started"
-  fi
-
-  log_flask "[$method] $url $response"
+    fi
+    
+    log_flask "[$method] $url $response"
 }
 
 
 # Membuat permintaan HTTP ke aplikasi Flask dan mencatat responsnya ke log
 function make_request() {
-  local url=$1
-  local method=$2
-  local response=$(curl -s -X $method $url)
-  log_flask "[$method] $url $response"
+    local url=$1
+    local method=$2
+    local response=$(curl -s -X $method $url)
+    log_flask "[$method] $url $response"
 }
 
 function make_request_404() {
-  local url=$1
-  local method=$2
- response=$(curl -s -o /dev/null -w "%{http_code}" "$url")
-if [[ $response -eq 404 ]]; then
-  log_flask "[$method] $url $response"
-fi
+    local url=$1
+    local method=$2
+    response=$(curl -s -o /dev/null -w "%{http_code}" "$url")
+    if [[ $response -eq 404 ]]; then
+        log_flask "[$method] $url $response"
+    fi
 }
 
 #cek apakah localhost sudah nyala
