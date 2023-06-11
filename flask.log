@@ -1,16 +1,6 @@
-[2023-06-08 00:14:46] [GET] http://localhost:5000 200
-[2023-06-08 00:14:46] [GET] http://localhost:5000 hello flask
-[2023-06-08 00:14:46] [GET] http://localhost:5000/hai 404
-[2023-06-08 00:18:09] [GET] http://localhost:5000 000
-[2023-06-08 00:18:09] [GET] http://localhost:5000 
-[2023-06-10 18:48:25] [GET] http://localhost:5000 200
-[2023-06-10 18:48:25] [GET] http://localhost:5000 hello flask
-[2023-06-10 18:48:25] [GET] http://localhost:5000/hai 404
-[2023-06-10 18:48:42] [GET] http://localhost:5000 200
-[2023-06-10 18:48:42] 
-[2023-06-10 18:48:42] [GET] http://localhost:5000 hello flask
-[2023-06-10 18:48:42] [GET] http://localhost:5000/hai 404
-[2023-06-10 18:49:53] [GET] http://localhost:5000 200
-[2023-06-10 18:49:53] 
-[2023-06-10 18:49:53] [GET] http://localhost:5000 hello flask
-[2023-06-10 18:49:53] [GET] http://localhost:5000/hai 404
+[2023-06-11 10:08:38] [GET] http://localhost:5000 200
+[2023-06-11 10:08:39] [GET] http://localhost:5000 hello flask
+[2023-06-11 10:08:40] [GET] http://localhost:5000/hai 404
+[2023-06-11 10:11:17] [GET] http://localhost:5000 200
+[2023-06-11 10:11:18] [GET] http://localhost:5000 hello flask
+[2023-06-11 10:11:19] [GET] http://localhost:5000/hai 404
