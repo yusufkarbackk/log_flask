@@ -21,7 +21,7 @@ echo "Pengunaan anda $cpu_usage%"
 echo "Waktu: $timestamp,Pengunaan CPU: $cpu_usage%"
 
 # Pengkondisian apabila pengunaan CPU > 25% maka akan memberikan notifikasi
-if (( $(echo "$cpu_usage > 5.0" | bc -l) ));then
+if (( $(echo "$cpu_usage > 3.0" | bc -l) ));then
 echo "cpu overload"
 # Mengirim notifikasi ke Telegram
 curl -s -o /dev/null --data chat_id=$ID_CHAT --data-urlencode "text=[$timestamp] Penggunaan CPU Anda Sudah Mencapai $cpu_usage% !" "$URL"

@@ -24,7 +24,21 @@ function log_flask() {
 
 function cek_cpu(){
     # Penggunaan CP
-    . cpu_usage_run.sh
+   
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+
+# Menampilkan pada terminal penggunaan CPU
+echo "Pengunaan anda $cpu_usage%"
+# Memasukan keluaran pengunaan CPU lalu memasukannya kedalam file Log
+echo "Waktu: $timestamp,Pengunaan CPU: $cpu_usage%"
+
+# Pengkondisian apabila pengunaan CPU > 25% maka akan memberikan notifikasi
+if (( $(echo "$cpu_usage > 3.0" | bc -l) ));then
+echo "cpu overload"
+# Mengirim notifikasi ke Telegram
+curl -s -o /dev/null --data chat_id=$chat_id --data-urlencode "text=[$timestamp] Penggunaan CPU Anda Sudah Mencapai $cpu_usage% !" "$telegram_url"
+fi
+
 }
 
 function cek_localhost() {
@@ -35,13 +49,13 @@ function cek_localhost() {
     SERVICE_NAME=$(ps aux | awk '{print $12}' | grep -m 1 "main.py")
     
     if [ "$SERVICE_NAME" == "main.py" ]; then
-        echo "$(date): Service $SERVICE_NAME is running."
-      	curl -s -o /dev/null --data chat_id=$chat_id --data-urlencode "text=Flask is running" "$telegram_url"
+        echo "$(date): Service $SERVICE_NAME is running." >> flask.log
+      	curl -s -o /dev/null --data chat_id=$chat_id --data-urlencode "text=$(date) Flask is running" "$telegram_url"
        	make_request "$APP_URL" "GET"
        	make_request_404 "$APP_URL_404" "GET"	
     else
-        echo "$(date): Service $SERVICE_NAME is not running."
-	curl -s -o /dev/null --data chat_id=$chat_id --data-urlencode "text=Flask is down" "$telegram_url"
+        echo "$(date): Service $SERVICE_NAME is not running." >> flask.log
+	curl -s -o /dev/null --data chat_id=$chat_id --data-urlencode "text=$(date) Flask is down" "$telegram_url"
         
     fi
     
@@ -68,7 +82,8 @@ function make_request_404() {
 }
 
 #cek apakah localhost sudah nyala
+cek_cpu
 cek_localhost "$APP_URL" "GET"
 
-cek_cpu
+
 
