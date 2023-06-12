@@ -30,7 +30,7 @@ cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
 # Menampilkan pada terminal penggunaan CPU
 echo "Pengunaan anda $cpu_usage%"
 # Memasukan keluaran pengunaan CPU lalu memasukannya kedalam file Log
-echo "Waktu: $timestamp,Pengunaan CPU: $cpu_usage%"
+echo "Waktu: $(date),Pengunaan CPU: $cpu_usage%" >> flask.log
 
 # Pengkondisian apabila pengunaan CPU > 25% maka akan memberikan notifikasi
 if (( $(echo "$cpu_usage > 3.0" | bc -l) ));then
